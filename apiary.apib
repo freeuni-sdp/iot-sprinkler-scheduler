@@ -1,18 +1,25 @@
 FORMAT: 1A
-HOST: http://polls.apiblueprint.org/
+HOST: https://iot-sprinkler-scheduler.herokuapp.com/
 
 # sprinkler-scheduler
 
-Polls is a simple API allowing consumers to view polls and vote in them.
+sprinkler-scheduler is a simple API that allows users to ping scheduler and get last commang
 
-## Questions Collection [/]
+## Ping[/ping]
 
-### List All Questions [GET]
+### Ping service[GET]
 
 + Response 200 (application/json)
+       {
+            "serviceStatus":"running"
+       }
 
-        [
+## Last Command[/status]
 
-                "choices": "test"
-        ]
+### Get last Command[GET]
+
++ Response 200 (application/json)
+    {
+        "lastCommand":"true"
+    }
 
