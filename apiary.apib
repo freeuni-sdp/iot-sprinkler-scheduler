@@ -7,7 +7,11 @@ sprinkler-scheduler is a simple API that allows users to ping scheduler and get 
 
 ## Ping [/ping]
 
+
+
 ### Ping service [GET]
+ping service and see if it is running
+
 
 + Response 200 (application/json)
 
@@ -20,6 +24,9 @@ sprinkler-scheduler is a simple API that allows users to ping scheduler and get 
 
 ### Get last Command [GET]
 
+get status of sprinkler. (last command scheduler gave to it)
+
+
 + Response 200 (application/json)
 
         {
@@ -30,6 +37,8 @@ sprinkler-scheduler is a simple API that allows users to ping scheduler and get 
 ## Schedule [/schedule]
 
 ### Get current schedule[GET]
+
+retrieve current schedule of sprinkler scheduler
 
 + Response 200 (application/json)
 
@@ -48,6 +57,10 @@ sprinkler-scheduler is a simple API that allows users to ping scheduler and get 
 
 ### Set new schedule [POST]
 
+chabge the shcedule 
+
++ startMonth (number) - Arbitrary number of start month in schedule
++ endtMonth (number) - Arbitrary number of end  month in schedule
 
 + Request (application/json)
 
@@ -70,7 +83,7 @@ sprinkler-scheduler is a simple API that allows users to ping scheduler and get 
 
 ##  Excluded [/schedule/excluded]
 
-### Add excluded day Command[POST]
+### Add excluded day [POST]
 
 + Request (application/json)
 
