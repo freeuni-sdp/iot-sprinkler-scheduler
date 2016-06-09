@@ -57,11 +57,11 @@ retrieve current schedule of sprinkler scheduler
 
 ### Set new schedule [POST]
 
-chabge the shcedule 
+change the shcedule 
 
-+ startMonth (number) - Arbitrary number of start month in schedule
-+ endtMonth (number) - Arbitrary number of end  month in schedule
-
++ startMonth (number) - Arbitrary,  number of start month in schedule
++ endtMonth (number) - Arbitrary,  number of end  month in schedule
++ excluded (json) - Arbitrary,  json array representing dayes that will be excluded from schedule
 + Request (application/json)
 
             {
@@ -84,6 +84,12 @@ chabge the shcedule
 ##  Excluded [/schedule/excluded]
 
 ### Add excluded day [POST]
+
+Add new day to excludes 
+
++ day (number) - Arbitrary, the number of day (starting from 1)
++ month (number) - Arbitrary, the number of month (starting from 1)
++ year (number) - Arbitrary, year
 
 + Request (application/json)
 
