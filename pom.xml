@@ -3,16 +3,16 @@
 
 	<modelVersion>4.0.0</modelVersion>
 
-	<groupId>ge.edu.freeuni.sdp.sprinklerscheduler.core</groupId>
-	<artifactId>sprinklerscheduler</artifactId>
+	<groupId>ge.edu.freeuni.sdp.todo.core</groupId>
+	<artifactId>todo-core</artifactId>
 	<packaging>war</packaging>
 	<version>1.0</version>
-	<name>sprinklerscheduler</name>
+	<name>todo-core</name>
 
 	<build>
 		<testSourceDirectory>test</testSourceDirectory>
 
-		<finalName>sprinklerscheduler</finalName>
+		<finalName>todo-core</finalName>
 		<plugins>
 
 			<plugin>
