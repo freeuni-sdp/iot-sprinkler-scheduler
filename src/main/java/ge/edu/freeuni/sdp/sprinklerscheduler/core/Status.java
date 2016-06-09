@@ -11,6 +11,7 @@ public class Status {
     @javax.xml.bind.annotation.XmlElement
     private String lastCommand;
 
+    public Status(){}
 
     public Status(String lastCommand) {
         this.lastCommand = lastCommand;
