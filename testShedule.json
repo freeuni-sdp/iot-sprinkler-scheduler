@@ -1,0 +1,12 @@
+{
+  "startMonth":4,
+  "endMonth":10,
+  "excluded":[
+    {
+      "day":2,
+      "month":2,
+      "year":2016
+    }
+  ]
+
+}

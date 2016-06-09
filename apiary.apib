@@ -23,3 +23,55 @@ sprinkler-scheduler is a simple API that allows users to ping scheduler and get 
         "lastCommand":"true"
     }
 
+## Schedule [/schedule]
+
+### Get current schedule[GET]
+
++ Response 200 (application/json)
+    {
+      "startMonth":4,
+      "endMonth":10,
+      "excluded":[
+        {
+          "day":2,
+          "month":2,
+          "year":2016
+        }
+      ]
+
+    }
+
+### Set new schedule [POST]
+
+
++ Request (application/json)
+
+            {
+              "startMonth":4,
+              "endMonth":10,
+              "excluded":[
+                {
+                  "day":2,
+                  "month":2,
+                  "year":2016
+                }
+              ]
+
+            }
+
++ Response 200(application/json)
+
+
+
+##  Excluded[/schedule/excluded]
+
+### Add excluded day Command[POST]
+
++ Request (application/json)
+                {
+                  "day":2,
+                  "month":2,
+                  "year":2016
+                }
+
++ Response 200 (application/json)
