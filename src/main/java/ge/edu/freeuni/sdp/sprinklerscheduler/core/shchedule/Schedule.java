@@ -20,6 +20,12 @@ public class Schedule {
     @XmlElement
     private Integer endMonth;
 
+    @XmlElement
+    private Integer beforeSunSet;
+
+    @XmlElement
+    private Integer afterSunRise;
+
     public static Schedule getInstance() {
         return instance;
     }
@@ -34,7 +40,21 @@ public class Schedule {
         this.endMonth = endMonth;
     }
 
+    public Integer getBeforeSunSet() {
+        return beforeSunSet;
+    }
 
+    public void setBeforeSunSet(Integer beforeSunSet) {
+        this.beforeSunSet = beforeSunSet;
+    }
+
+    public Integer getAfterSunRise() {
+        return afterSunRise;
+    }
+
+    public void setAfterSunRise(Integer afterSunRise) {
+        this.afterSunRise = afterSunRise;
+    }
 
     public List<Day> getExcluded() {
         return excluded;
