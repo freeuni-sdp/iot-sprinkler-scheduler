@@ -35,8 +35,8 @@ public class ScheduleCorrectnessTest extends JerseyTest {
     @Test
     public void TestSchedule2() throws Exception {
         Schedule mySchedule = Schedule.getInstance();
-        mySchedule.setAfterSunRise(3);
-        mySchedule.setBeforeSunSet(2);
+        mySchedule.setAfterSunRise(3.0);
+        mySchedule.setBeforeSunSet(2.0);
         mySchedule.setEndMonth(7);
         mySchedule.setStartMonth(1);
         Schedule result =
@@ -45,8 +45,8 @@ public class ScheduleCorrectnessTest extends JerseyTest {
                         .get(Schedule.class);
         assertEquals(1, (int)result.getStartMonth());
         assertEquals(7, (int)result.getEndMonth());
-        assertEquals(3, (int)result.getAfterSunRise());
-        assertEquals(2, (int)result.getBeforeSunSet());
+        assertEquals(3.0, result.getAfterSunRise(), 0.000001);
+        assertEquals(2.0, result.getBeforeSunSet(), 0.000001);
     }
 
 

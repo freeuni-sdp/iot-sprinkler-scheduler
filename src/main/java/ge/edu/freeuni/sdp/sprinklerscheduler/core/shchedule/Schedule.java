@@ -21,38 +21,41 @@ public class Schedule {
     private Integer endMonth;
 
     @XmlElement
-    private Integer beforeSunSet;
+    private Double beforeSunSet;
 
     @XmlElement
-    private Integer afterSunRise;
+    private Double afterSunRise;
 
     public static Schedule getInstance() {
         return instance;
     }
 
-    private static Schedule instance = new Schedule(new ArrayList<Day>(),4,10);
+    private static Schedule instance = new Schedule(new ArrayList<Day>(),4,10,0.5,0.5);
 
     public Schedule (){}
 
-    private Schedule(List<Day> excluded, Integer startMonth, Integer endMonth) {
+    private Schedule(List<Day> excluded, Integer startMonth, Integer endMonth,
+                     Double afterSunRise, Double beforeSunSet) {
         this.excluded = excluded;
         this.startMonth = startMonth;
         this.endMonth = endMonth;
-    }
-
-    public Integer getBeforeSunSet() {
-        return beforeSunSet;
-    }
-
-    public void setBeforeSunSet(Integer beforeSunSet) {
+        this.afterSunRise = afterSunRise;
         this.beforeSunSet = beforeSunSet;
     }
 
-    public Integer getAfterSunRise() {
+    public Double getBeforeSunSet() {
+        return beforeSunSet;
+    }
+
+    public void setBeforeSunSet(Double beforeSunSet) {
+        this.beforeSunSet = beforeSunSet;
+    }
+
+    public Double getAfterSunRise() {
         return afterSunRise;
     }
 
-    public void setAfterSunRise(Integer afterSunRise) {
+    public void setAfterSunRise(Double afterSunRise) {
         this.afterSunRise = afterSunRise;
     }
 
