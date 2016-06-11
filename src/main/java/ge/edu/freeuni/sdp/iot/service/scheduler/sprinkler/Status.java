@@ -1,4 +1,4 @@
-package ge.edu.freeuni.sdp.sprinklerscheduler.core;
+package ge.edu.freeuni.sdp.iot.service.scheduler.sprinkler;
 
 import javax.xml.bind.annotation.XmlRootElement;
 
