@@ -54,8 +54,9 @@ retrieve current schedule of sprinkler scheduler
 
         {
             "startMonth":4,
-      
             "endMonth":10,
+            "afterSunRise": 0.5,
+            "beforeSunSet": 0.5,
              "excluded":[
              {
                     "day":2,
@@ -79,6 +80,8 @@ change the schedule
             {
               "startMonth":4,
               "endMonth":10,
+              "afterSunRise": 0.5,
+              "beforeSunSet": 0.5,
               "excluded":[
                 {
                   "2/2/2016"
@@ -107,6 +110,6 @@ Add new day to excludes
 
         {
              "date":"28/8/1995"
-             }
+        }
 
 + Response 200 (application/json)
