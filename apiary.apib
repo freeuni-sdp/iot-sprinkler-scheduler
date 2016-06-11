@@ -61,17 +61,19 @@ retrieve current schedule of sprinkler scheduler
                     "day":2,
                     "month":2,
                     "year":2016
-                    }
-                    ]
-                    }
+             }
+            ]
+        }
 
 ### Set new schedule [POST]
 
-change the shcedule 
+change the schedule 
 
 + startMonth (number) - Arbitrary,  number of start month in schedule
 + endtMonth (number) - Arbitrary,  number of end  month in schedule
 + excluded (json) - Arbitrary,  json array representing dayes that will be excluded from schedule
++ afterSunRise (double) - Arbitrary, double representing when to start work after sun rise.
++ beforeSunSet (double) - Arbitrary, double representing when to start work before sun set.
 + Request (application/json)
 
             {
@@ -79,9 +81,7 @@ change the shcedule
               "endMonth":10,
               "excluded":[
                 {
-                  "day":2,
-                  "month":2,
-                  "year":2016
+                  "2/2/2016"
                 }
               ]
 
