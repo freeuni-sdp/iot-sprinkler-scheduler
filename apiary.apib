@@ -3,7 +3,7 @@ HOST: https://iot-sprinkler-scheduler.herokuapp.com/
 
 # sprinkler-scheduler
 
-sprinkler-scheduler is a simple API that allows users to ping scheduler and get last commang
+sprinkler-scheduler is a simple API that allows users to ping scheduler. And Also read and change shedule
 
 ## Ping [/ping]
 
@@ -20,21 +20,30 @@ ping service and see if it is running
         }
        
 
-## Last Command [/status]
+## Next  command time  [/houses/{house_id}/next_command_time]
 
-### Get last Command [GET]
++ Parameters
+    + house_id (required, string, `1`)  House identifier
 
-get status of sprinkler. (last command scheduler gave to it)
+    
+### Get next  command time[GET]
+
+
+get time of next  command
 
 
 + Response 200 (application/json)
 
         {
-        "lastCommand":"true"
+        "time":"08:03:10 pm"
         }
     
 
-## Schedule [/schedule]
+## Schedule [/houses/{house_id}/schedule]
+
++ Parameters
+    + house_id (required, string, `1`)  House identifier
+   
 
 ### Get current schedule[GET]
 
@@ -81,8 +90,11 @@ change the shcedule
 
 
 
-##  Excluded [/schedule/excluded]
+##  Excluded [/huses/{house_id}/schedule/excluded]
 
++ Parameters
+    + house_id (required, string, `1`)  House identifier
+    
 ### Add excluded day [POST]
 
 Add new day to excludes 
