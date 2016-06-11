@@ -12,7 +12,7 @@ import java.util.List;
 public class Schedule {
 
     @XmlElement
-    private List<Day> excluded;
+    private List<String> excluded;
 
     @XmlElement
     private Integer startMonth;
@@ -30,11 +30,11 @@ public class Schedule {
         return instance;
     }
 
-    private static Schedule instance = new Schedule(new ArrayList<Day>(),4,10,0.5,0.5);
+    private static Schedule instance = new Schedule(new ArrayList<String>(),4,10,0.5,0.5);
 
     public Schedule (){}
 
-    private Schedule(List<Day> excluded, Integer startMonth, Integer endMonth,
+    private Schedule(List<String> excluded, Integer startMonth, Integer endMonth,
                      Double afterSunRise, Double beforeSunSet) {
         this.excluded = excluded;
         this.startMonth = startMonth;
@@ -59,15 +59,15 @@ public class Schedule {
         this.afterSunRise = afterSunRise;
     }
 
-    public List<Day> getExcluded() {
+    public List<String> getExcluded() {
         return excluded;
     }
 
-    public void setExcluded(List<Day> excluded) {
+    public void setExcluded(List<String> excluded) {
         this.excluded = excluded;
     }
 
-    public void addExcluded(Day day){
+    public void addExcluded(String day){
         this.excluded.add(day);
     }
 

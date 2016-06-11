@@ -1,5 +1,4 @@
 import ge.edu.freeuni.sdp.iot.service.scheduler.sprinkler.SchedulerStatus;
-import ge.edu.freeuni.sdp.iot.service.scheduler.sprinkler.shchedule.Day;
 import ge.edu.freeuni.sdp.iot.service.scheduler.sprinkler.shchedule.Schedule;
 import org.glassfish.jersey.server.ResourceConfig;
 import org.glassfish.jersey.test.JerseyTest;
@@ -53,41 +52,37 @@ public class ScheduleCorrectnessTest extends JerseyTest {
     @Test
     public void TestSchedule3() throws Exception {
         Schedule mySchedule = Schedule.getInstance();
-        mySchedule.addExcluded(new Day(28,8,1995));
+        mySchedule.addExcluded("28/8/1995");
         Schedule result =
                 target("schedule")
                         .request()
                         .get(Schedule.class);
-        assertEquals((new Day(28,8,1995)).getDay(), result.getExcluded().get(0).getDay());
-        assertEquals((new Day(28,8,1995)).getMonth(), result.getExcluded().get(0).getMonth());
-        assertEquals((new Day(28,8,1995)).getYear(), result.getExcluded().get(0).getYear());
+        assertEquals("28/8/1995", result.getExcluded().get(0));
     }
 
 
     @Test
     public void TestSchedule4() throws Exception {
         Schedule mySchedule = Schedule.getInstance();
-        mySchedule.setExcluded(new ArrayList<Day>());
+        mySchedule.setExcluded(new ArrayList<String>());
         for (int i=0; i<5; i++){
-            mySchedule.addExcluded(new Day(i,i,2000+i));
+            mySchedule.addExcluded(i+"/"+i+"/"+2000);
         }
         Schedule result =
                 target("schedule")
                         .request()
                         .get(Schedule.class);
         for (int i=0; i<5; i++){
-            assertEquals((new Day(i,i,2000+i)).getDay(), result.getExcluded().get(i).getDay());
-            assertEquals((new Day(i,i,2000+i)).getMonth(), result.getExcluded().get(i).getMonth());
-            assertEquals((new Day(i,i,2000+i)).getYear(), result.getExcluded().get(i).getYear());
+            assertEquals(i+"/"+i+"/"+2000, result.getExcluded().get(i));
         }
     }
 
     @Test
     public void TestSchedule5() throws Exception {
         Schedule mySchedule = Schedule.getInstance();
-        List<Day> list = new ArrayList<>();
+        List<String> list = new ArrayList<>();
         for (int i=0; i<5; i++){
-            list.add(new Day(i,i,2000+i));
+            list.add(i+"/"+i+"/"+2000);
         }
         mySchedule.setExcluded(list);
         Schedule result =
@@ -95,9 +90,7 @@ public class ScheduleCorrectnessTest extends JerseyTest {
                         .request()
                         .get(Schedule.class);
         for (int i=0; i<5; i++){
-            assertEquals((new Day(i,i,2000+i)).getDay(), result.getExcluded().get(i).getDay());
-            assertEquals((new Day(i,i,2000+i)).getMonth(), result.getExcluded().get(i).getMonth());
-            assertEquals((new Day(i,i,2000+i)).getYear(), result.getExcluded().get(i).getYear());
+            assertEquals(i+"/"+i+"/"+2000, result.getExcluded().get(i));
         }
     }
 
