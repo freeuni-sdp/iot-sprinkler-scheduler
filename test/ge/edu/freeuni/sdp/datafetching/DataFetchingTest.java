@@ -1,6 +1,5 @@
 package ge.edu.freeuni.sdp.datafetching;
 
-import ge.edu.freeuni.sdp.sprinklerscheduler.core.Listener;
 import org.junit.Test;
 
 import java.io.IOException;
@@ -12,8 +11,8 @@ public class DataFetchingTest {
 
     @Test
     public void testKikola() throws IOException {
-        Listener ls = new Listener();
-        ls.getHousesData();
+//        Listener ls = new Listener();
+//        ls.getHousesData();
     }
 
 
