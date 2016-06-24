@@ -129,6 +129,12 @@
 			<version>RELEASE</version>
 		</dependency>
 
+        <dependency>
+            <groupId>com.eclipsesource.minimal-json</groupId>
+            <artifactId>minimal-json</artifactId>
+            <version>0.9.4</version>
+        </dependency>
+
 	</dependencies>
 	<properties>
 		<jersey.version>2.22</jersey.version>
