@@ -10,6 +10,7 @@ import javax.ws.rs.client.Client;
 import javax.ws.rs.client.ClientBuilder;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
+import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.*;
 
@@ -19,7 +20,7 @@ import java.util.*;
 public class Utility {
     private Map<Integer, Pair> houseIDAndLocations;
     private Map<Integer, Schedule> houseIDAndSchedules;
-    private Map<Integer, Pair> houseIDAndSun;
+    public Map<Integer, Pair> houseIDAndSun;
 
     private static Utility instance = new Utility();
 
@@ -35,18 +36,23 @@ public class Utility {
         this.houseIDAndLocations = new HashMap<>();
         this.houseIDAndSchedules = new HashMap<>();
         this.houseIDAndSun = new HashMap<>();
-        Thread refresher = new Thread(new Runnable() {
+        fetchNewDataFromLinks();
+        Runnable myThread = new Runnable() {
+            @Override
             public void run() {
-                refreshData();
-                try {
-                    Thread.sleep(1800000);
-                }
-                catch (InterruptedException e){
-                    System.out.println("pfffff");
+                while(true){
+                    try {
+                        Thread.sleep(1800000);
+                        refreshData();
+                    }
+                    catch (InterruptedException e){
+                        System.out.println("pfffff");
+                    }
                 }
             }
-        });
-        refresher.start();
+        };
+        Thread thread = new Thread(myThread);
+        thread.start();
     }
 
     public void refreshData(){
@@ -69,11 +75,13 @@ public class Utility {
         Date sunSet = (Date) this.houseIDAndSun.get(houseID).second;
 
         Date currentDate = new Date();
-        Long currentTime = currentDate.getTime();
-        Double currentTimeD = currentTime.doubleValue();
 
-        if (currentTimeD - afterSunRise*60*60*1000 > sunRise.getTime()
-                && currentTimeD + beforeSunSet*60*60*1000 < sunSet.getTime()){
+        int rightNow = currentDate.getHours()*3600 + currentDate.getMinutes()*60 + currentDate.getSeconds();
+        int afterSunRizeTime = sunRise.getHours()*3600 + sunRise.getMinutes()*60 + sunRise.getSeconds();
+        int beforeSunSetTime = sunSet.getHours()*3600 + sunSet.getMinutes()*60 + sunSet.getSeconds();
+        
+        if ( rightNow - afterSunRise*3600 > afterSunRizeTime
+                && rightNow + beforeSunSet*3600 < beforeSunSetTime){
             return true;
         }
         return false;
@@ -85,14 +93,14 @@ public class Utility {
         this.houseIDAndSun.clear();
         for (Integer houseID : getHouseIDS()){
             Pair sun = getSunData(houseID);
-            String sunRise = ((String)sun.first).split(" ")[0];
-            String sunSet = ((String)sun.second).split(" ")[0];
+            String sunRise = ((String)sun.first);
+            String sunSet = ((String)sun.second);
 
-            SimpleDateFormat simpleDateFormat = new SimpleDateFormat("HH:mm:ss");
+            DateFormat formatter = new SimpleDateFormat("hh:mm:ss a");
             try
             {
-                Date dateSunRise = simpleDateFormat.parse(sunRise);
-                Date dateSunSet = simpleDateFormat.parse(sunSet);
+                Date dateSunRise = formatter.parse(sunRise);
+                Date dateSunSet = formatter.parse(sunSet);
                 this.houseIDAndSun.put(houseID, new Pair(dateSunRise,dateSunSet));
             }
             catch (java.text.ParseException ex)
@@ -182,10 +190,11 @@ public class Utility {
         }
     }
 
-    private static class Pair<T> {
-        T first, second;
 
-        Pair(T a, T b) {
+    public static class Pair<T> {
+        public T first, second;
+
+        public Pair(T a, T b) {
             this.first = a;
             this.second = b;
         }
