@@ -1,5 +1,5 @@
-import ge.edu.freeuni.sdp.sprinklerscheduler.core.SchedulerStatus;
-import ge.edu.freeuni.sdp.sprinklerscheduler.core.Status;
+import ge.edu.freeuni.sdp.iot.service.scheduler.sprinkler.SchedulerStatus;
+import ge.edu.freeuni.sdp.iot.service.scheduler.sprinkler.Status;
 import org.glassfish.jersey.server.ResourceConfig;
 import org.glassfish.jersey.test.JerseyTest;
 import org.junit.Test;

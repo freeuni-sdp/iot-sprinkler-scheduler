@@ -1,15 +1,10 @@
-package ge.edu.freeuni.sdp.sprinklerscheduler.core;
+package ge.edu.freeuni.sdp.iot.service.scheduler.sprinkler;
 
-import ge.edu.freeuni.sdp.sprinklerscheduler.core.shchedule.Day;
-import ge.edu.freeuni.sdp.sprinklerscheduler.core.shchedule.Schedule;
+import ge.edu.freeuni.sdp.iot.service.scheduler.sprinkler.shchedule.Schedule;
 
 import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
-import javax.xml.bind.JAXBContext;
-import javax.xml.bind.JAXBException;
-import javax.xml.bind.Unmarshaller;
-import java.io.StringReader;
 
 /**
  * Created by GM on 6/9/2016.
@@ -68,7 +63,7 @@ public class SchedulerStatus {
     @Consumes({MediaType.APPLICATION_JSON})
     @Path("/schedule/excluded")
     @POST
-    public Response addExcluded(Day day){
+    public Response addExcluded(String day){
         Schedule.getInstance().addExcluded(day);
         return Response.ok().build();
     }

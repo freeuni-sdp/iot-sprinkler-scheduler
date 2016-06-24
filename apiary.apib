@@ -3,7 +3,7 @@ HOST: https://iot-sprinkler-scheduler.herokuapp.com/
 
 # sprinkler-scheduler
 
-sprinkler-scheduler is a simple API that allows users to ping scheduler and get last commang
+sprinkler-scheduler is a simple API that allows users to ping scheduler. And Also read and change shedule
 
 ## Ping [/ping]
 
@@ -20,21 +20,31 @@ ping service and see if it is running
         }
        
 
-## Last Command [/status]
+## Next  command time  [/houses/{house_id}/next_command_time]
 
-### Get last Command [GET]
++ Parameters
+    + house_id (required, string, `1`)  House identifier
 
-get status of sprinkler. (last command scheduler gave to it)
+    
+### Get next  command time[GET]
+
+
+returns time of next command
 
 
 + Response 200 (application/json)
 
         {
-        "lastCommand":"true"
+        "date":"10/10/2016"
+        "time":"08:03:10 pm"
         }
     
 
-## Schedule [/schedule]
+## Schedule [/houses/{house_id}/schedule]
+
++ Parameters
+    + house_id (required, string, `1`)  House identifier
+   
 
 ### Get current schedule[GET]
 
@@ -44,34 +54,37 @@ retrieve current schedule of sprinkler scheduler
 
         {
             "startMonth":4,
-      
             "endMonth":10,
+            "afterSunRise": 0.5,
+            "beforeSunSet": 0.5,
              "excluded":[
              {
                     "day":2,
                     "month":2,
                     "year":2016
-                    }
-                    ]
-                    }
+             }
+            ]
+        }
 
 ### Set new schedule [POST]
 
-change the shcedule 
+change the schedule 
 
 + startMonth (number) - Arbitrary,  number of start month in schedule
 + endtMonth (number) - Arbitrary,  number of end  month in schedule
 + excluded (json) - Arbitrary,  json array representing dayes that will be excluded from schedule
++ afterSunRise (double) - Arbitrary, double representing when to start work after sun rise.
++ beforeSunSet (double) - Arbitrary, double representing when to start work before sun set.
 + Request (application/json)
 
             {
               "startMonth":4,
               "endMonth":10,
+              "afterSunRise": 0.5,
+              "beforeSunSet": 0.5,
               "excluded":[
                 {
-                  "day":2,
-                  "month":2,
-                  "year":2016
+                  "2/2/2016"
                 }
               ]
 
@@ -81,22 +94,22 @@ change the shcedule
 
 
 
-##  Excluded [/schedule/excluded]
+##  Excluded [/huses/{house_id}/schedule/excluded]
 
++ Parameters
+    + house_id (required, string, `1`)  House identifier
+    
 ### Add excluded day [POST]
 
 Add new day to excludes 
 
-+ day (number) - Arbitrary, the number of day (starting from 1)
-+ month (number) - Arbitrary, the number of month (starting from 1)
-+ year (number) - Arbitrary, year
++ date (date) - Arbitrary, date of excluded day format: dd/MM/yyy 
+
 
 + Request (application/json)
 
         {
-             "day":2,
-             "month":2,
-             "year":2016
-             }
+             "date":"28/8/1995"
+        }
 
 + Response 200 (application/json)
