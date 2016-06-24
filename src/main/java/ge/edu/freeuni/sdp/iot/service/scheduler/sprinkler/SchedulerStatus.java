@@ -1,6 +1,6 @@
 package ge.edu.freeuni.sdp.iot.service.scheduler.sprinkler;
 
-import ge.edu.freeuni.sdp.iot.service.scheduler.sprinkler.shchedule.Schedule;
+import ge.edu.freeuni.sdp.iot.service.scheduler.sprinkler.shchedule.data.Schedule;
 
 import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;
