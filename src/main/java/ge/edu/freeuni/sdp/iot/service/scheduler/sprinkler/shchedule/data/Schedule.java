@@ -1,13 +1,11 @@
-package ge.edu.freeuni.sdp.iot.service.scheduler.sprinkler.shchedule;
+package ge.edu.freeuni.sdp.iot.service.scheduler.sprinkler.shchedule.data;
 
 import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlRootElement;
 import java.util.ArrayList;
 import java.util.List;
 
-/**
- * Created by rezo on 6/10/16.
- */
+
 @XmlRootElement
 public class Schedule {
 
@@ -85,5 +83,9 @@ public class Schedule {
 
     public void setEndMonth(Integer endMonth) {
         this.endMonth = endMonth;
+    }
+
+    public boolean shoudSendOn(){
+        return true;
     }
 }
