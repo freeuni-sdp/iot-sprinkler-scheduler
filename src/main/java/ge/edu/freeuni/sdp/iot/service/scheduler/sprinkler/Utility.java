@@ -10,6 +10,7 @@ import javax.ws.rs.client.Client;
 import javax.ws.rs.client.ClientBuilder;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
+import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.*;
 
@@ -21,7 +22,17 @@ public class Utility {
     private Map<Integer, Schedule> houseIDAndSchedules;
     public Map<Integer, Pair> houseIDAndSun;
 
-    public Utility(){
+    private static Utility instance = new Utility();
+
+    public static Utility getInstance(){
+        return instance;
+    }
+
+    private Utility(){
+
+    }
+
+    public void init() {
         this.houseIDAndLocations = new HashMap<>();
         this.houseIDAndSchedules = new HashMap<>();
         this.houseIDAndSun = new HashMap<>();
@@ -56,7 +67,6 @@ public class Utility {
     }
 
     public boolean timeForSprinkler(int houseID){
-        System.out.println("I am in");
         Schedule schedule = this.houseIDAndSchedules.get(houseID);
         Double afterSunRise = schedule.getAfterSunRise();
         Double beforeSunSet = schedule.getBeforeSunSet();
@@ -65,15 +75,15 @@ public class Utility {
         Date sunSet = (Date) this.houseIDAndSun.get(houseID).second;
 
         Date currentDate = new Date();
-        Long currentTime = currentDate.getTime();
-        Double currentTimeD = currentTime.doubleValue();
 
-        if (currentTimeD - afterSunRise*60*60*1000 > sunRise.getTime()
-                && currentTimeD + beforeSunSet*60*60*1000 < sunSet.getTime()){
-            System.out.println("truuuuuuuuuuueee");
+        int rightNow = currentDate.getHours()*3600 + currentDate.getMinutes()*60 + currentDate.getSeconds();
+        int afterSunRizeTime = sunRise.getHours()*3600 + sunRise.getMinutes()*60 + sunRise.getSeconds();
+        int beforeSunSetTime = sunSet.getHours()*3600 + sunSet.getMinutes()*60 + sunSet.getSeconds();
+        
+        if ( rightNow - afterSunRise*3600 > afterSunRizeTime
+                && rightNow + beforeSunSet*3600 < beforeSunSetTime){
             return true;
         }
-        System.out.println("falseeeeeeeee");
         return false;
     }
 
@@ -83,14 +93,14 @@ public class Utility {
         this.houseIDAndSun.clear();
         for (Integer houseID : getHouseIDS()){
             Pair sun = getSunData(houseID);
-            String sunRise = ((String)sun.first).split(" ")[0];
-            String sunSet = ((String)sun.second).split(" ")[0];
+            String sunRise = ((String)sun.first);
+            String sunSet = ((String)sun.second);
 
-            SimpleDateFormat simpleDateFormat = new SimpleDateFormat("HH:mm:ss");
+            DateFormat formatter = new SimpleDateFormat("hh:mm:ss a");
             try
             {
-                Date dateSunRise = simpleDateFormat.parse(sunRise);
-                Date dateSunSet = simpleDateFormat.parse(sunSet);
+                Date dateSunRise = formatter.parse(sunRise);
+                Date dateSunSet = formatter.parse(sunSet);
                 this.houseIDAndSun.put(houseID, new Pair(dateSunRise,dateSunSet));
             }
             catch (java.text.ParseException ex)
@@ -166,12 +176,20 @@ public class Utility {
                 Pair<Double> geoLoc = new Pair<>(latitude, longtitude);
                 System.out.println("house id is:   " + houseID + "  coords are:   " + latitude + "  aaand  " + longtitude);
                 houseIDAndLocations.put(houseID, geoLoc);
+                putDefaultScheduleToNewHouse(houseID);
             }
         } else {
             System.out.println("Could not load houses' IDs");
         }
         return houseIDAndLocations;
     }
+
+    private void putDefaultScheduleToNewHouse(int houseID) {
+        if (this.houseIDAndSchedules.get(houseID)==null){
+            this.setNewScheduleForHouse(Schedule.getInstance(),houseID);
+        }
+    }
+
 
     public static class Pair<T> {
         public T first, second;
@@ -181,6 +199,10 @@ public class Utility {
             this.second = b;
         }
 
+    }
+
+    public void setNewScheduleForHouse(Schedule schedule, Integer houseId){
+        this.houseIDAndSchedules.put(houseId, schedule);
     }
 
 

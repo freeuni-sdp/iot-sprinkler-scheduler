@@ -25,8 +25,9 @@ public class Listener implements ServletContextListener,
     // -------------------------------------------------------
     public void contextInitialized(ServletContextEvent sce) {
         System.out.println("listener started");
-        Utility utility = new Utility();
-        new SprinklerStatusUpdater(Schedule.getInstance(),new SprinklerCommunicatorProxy()).start();
+        Utility utility = Utility.getInstance();
+        utility.init();
+        new SprinklerStatusUpdater(utility, new SprinklerCommunicatorProxy()).start();
 
     }
 

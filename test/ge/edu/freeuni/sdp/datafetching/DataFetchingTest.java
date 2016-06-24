@@ -13,7 +13,8 @@ public class DataFetchingTest {
 
     @Test
     public void testKikola() throws IOException {
-        Utility utility = new Utility();
+        Utility utility = Utility.getInstance();
+        utility.init();
         Double afterSunRise = 1.5;
         Double beforeSunSet = 0.4;
 
@@ -21,14 +22,17 @@ public class DataFetchingTest {
         Date sunSet = (Date) utility.houseIDAndSun.get(1).second;
 
         Date currentDate = new Date();
-        Long currentTime = currentDate.getTime();
-        Double currentTimeD = currentTime.doubleValue();
 
-        if (currentTimeD - afterSunRise*60*60*1000 > sunRise.getTime()
-                && currentTimeD + beforeSunSet*60*60*1000 < sunSet.getTime()){
-            System.out.println("truuuuuuuuuuueee");
+        int rightNow = currentDate.getHours()*3600 + currentDate.getMinutes()*60 + currentDate.getSeconds();
+        int afterSunRizeTime = sunRise.getHours()*3600 + sunRise.getMinutes()*60 + sunRise.getSeconds();
+        int beforeSunSetTime = sunSet.getHours()*3600 + sunSet.getMinutes()*60 + sunSet.getSeconds();
+        System.out.println("now "+currentDate.getHours() + " after " + sunRise.getHours() + " before  " + sunSet.getHours());
+
+        if ( rightNow - afterSunRise*3600 > afterSunRizeTime
+                && rightNow + beforeSunSet*3600 < beforeSunSetTime){
+            System.out.println("kiii");
         }
-        System.out.println(currentTimeD - afterSunRise*60*60*1000 +"daaaaaa" + sunRise.getTime());
+        System.out.println(rightNow + " asdasd   " + afterSunRizeTime + "     daaaa   " + beforeSunSetTime);
     }
 
 

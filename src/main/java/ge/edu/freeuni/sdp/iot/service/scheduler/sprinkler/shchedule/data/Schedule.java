@@ -84,8 +84,4 @@ public class Schedule {
     public void setEndMonth(Integer endMonth) {
         this.endMonth = endMonth;
     }
-
-    public boolean shoudSendOn(){
-        return true;
-    }
 }
