@@ -1,9 +1,4 @@
-
-
-import com.eclipsesource.json.Json;
-import com.eclipsesource.json.JsonArray;
-import com.eclipsesource.json.JsonObject;
-import com.eclipsesource.json.JsonValue;
+import ge.edu.freeuni.sdp.iot.service.scheduler.sprinkler.Utility;
 import ge.edu.freeuni.sdp.iot.service.scheduler.sprinkler.shchedule.data.Schedule;
 import ge.edu.freeuni.sdp.iot.service.scheduler.sprinkler.shchedule.updater.SprinklerStatusUpdater;
 import ge.edu.freeuni.sdp.iot.service.scheduler.sprinkler.sprinkler.comunicator.SprinklerCommunicatorProxy;
@@ -30,6 +25,7 @@ public class Listener implements ServletContextListener,
     // -------------------------------------------------------
     public void contextInitialized(ServletContextEvent sce) {
         System.out.println("listener started");
+        Utility utility = new Utility();
         new SprinklerStatusUpdater(Schedule.getInstance(),new SprinklerCommunicatorProxy()).start();
 
     }
