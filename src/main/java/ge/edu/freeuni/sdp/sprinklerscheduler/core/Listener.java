@@ -1,6 +1,5 @@
-package ge.edu.freeuni.sdp.sprinklerscheduler.core; /**
- * Created by rezo on 6/24/16.
- */
+package ge.edu.freeuni.sdp.sprinklerscheduler.core;
+
 
 import javax.servlet.ServletContextEvent;
 import javax.servlet.ServletContextListener;
