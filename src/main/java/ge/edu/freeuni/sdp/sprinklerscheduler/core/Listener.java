@@ -4,7 +4,6 @@ package ge.edu.freeuni.sdp.sprinklerscheduler.core;
 import com.eclipsesource.json.JsonArray;
 import com.eclipsesource.json.JsonObject;
 import ge.edu.freeuni.sdp.iot.service.scheduler.sprinkler.shchedule.Schedule;
-import javafx.util.Pair;
 
 import javax.servlet.ServletContextEvent;
 import javax.servlet.ServletContextListener;
@@ -40,7 +39,7 @@ public class Listener implements ServletContextListener,
     }
 
     /** Fetches sunset times and sunrise times*/
-    private Pair<Integer, Integer> getSunData() {
+    private Pair<Integer> getSunData() {
 
         return null;
     }
@@ -63,7 +62,7 @@ public class Listener implements ServletContextListener,
                 String[] parts = coordinates.split(",");
                 double latitude = Double.parseDouble(parts[0]);
                 double longtitude = Double.parseDouble(parts[1]);
-                Pair<Double, Double> geoLoc = new Pair<>(latitude, longtitude);
+                Pair<Double> geoLoc = new Pair<>(latitude, longtitude);
 
                 JsonObject nameObject = jsonObject.get("name").asObject();
                 String houseName = nameObject.get("_").asString();
@@ -79,6 +78,15 @@ public class Listener implements ServletContextListener,
         return houseIDAndLocations;
     }
 
+    private class Pair<T>{
+        T first, second;
+
+        Pair(T a, T b){
+            this.first = a;
+            this.second = b;
+        }
+
+    }
 
     public void contextDestroyed(ServletContextEvent sce) {
       /* This method is invoked when the Servlet Context 
