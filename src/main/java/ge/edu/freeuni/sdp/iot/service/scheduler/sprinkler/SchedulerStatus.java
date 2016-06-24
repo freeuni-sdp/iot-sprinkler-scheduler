@@ -32,10 +32,10 @@ public class SchedulerStatus {
     /**
      * @return current Schedule
      */
-    @Path("/schedule")
+    @Path("/houses/{house_id}/schedule")
     @GET
-    public Schedule schedule() {
-        return Schedule.getInstance();
+    public Schedule schedule(@PathParam("house_id") String houseID) {
+        return Utility.getInstance().getHouseScheduleByID(Integer.valueOf(houseID));
     }
 
 
@@ -44,13 +44,13 @@ public class SchedulerStatus {
      * @return response code 200 : schedule changed
      */
     @Consumes({MediaType.APPLICATION_JSON})
-    @Path("/schedule")
+    @Path("/houses/{house_id}/schedule/")
     @POST
-    public Response setSchedule(Schedule schedule) {
-        Schedule schedule1 = Schedule.getInstance();
-        schedule1.setEndMonth(schedule.getEndMonth());
-        schedule1.setStartMonth(schedule.getStartMonth());
-        schedule1.setExcluded(schedule.getExcluded());
+    public Response setSchedule(@PathParam("house_id") String houseId, Schedule schedule) {
+        Utility utility = Utility.getInstance();
+
+        utility.setNewScheduleForHouse(schedule, Integer.valueOf(houseId));
+
 
         return Response.ok().build();
     }
@@ -61,10 +61,11 @@ public class SchedulerStatus {
      * @return response code 200: excluded day added
      */
     @Consumes({MediaType.APPLICATION_JSON})
-    @Path("/schedule/excluded")
+    @Path("/houses/{house_id}/schedule/excluded")
     @POST
-    public Response addExcluded(String day){
-        Schedule.getInstance().addExcluded(day);
+    public Response addExcluded(@PathParam("house_id") String houseId, String day){
+        Utility utility = Utility.getInstance();
+        utility.getHouseScheduleByID(Integer.valueOf(houseId)).addExcluded(day);
         return Response.ok().build();
     }
 
