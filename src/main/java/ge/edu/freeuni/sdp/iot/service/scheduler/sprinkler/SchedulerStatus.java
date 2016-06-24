@@ -32,10 +32,10 @@ public class SchedulerStatus {
     /**
      * @return current Schedule
      */
-    @Path("/schedule")
+    @Path("/houses/{house_id}/schedule")
     @GET
-    public Schedule schedule() {
-        return Schedule.getInstance();
+    public Schedule schedule(@PathParam("house_id") String houseID) {
+        return Utility.getInstance().getHouseScheduleByID(Integer.valueOf(houseID));
     }
 
 
