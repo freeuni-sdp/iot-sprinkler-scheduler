@@ -4,7 +4,7 @@ import com.eclipsesource.json.Json;
 import com.eclipsesource.json.JsonArray;
 import com.eclipsesource.json.JsonObject;
 import com.eclipsesource.json.JsonValue;
-import ge.edu.freeuni.sdp.iot.service.scheduler.sprinkler.shchedule.Schedule;
+import ge.edu.freeuni.sdp.iot.service.scheduler.sprinkler.shchedule.data.Schedule;
 
 import javax.ws.rs.client.Client;
 import javax.ws.rs.client.ClientBuilder;
