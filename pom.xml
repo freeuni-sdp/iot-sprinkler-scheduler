@@ -129,7 +129,6 @@
 			<version>RELEASE</version>
 		</dependency>
 
-
 	</dependencies>
 	<properties>
 		<jersey.version>2.22</jersey.version>
