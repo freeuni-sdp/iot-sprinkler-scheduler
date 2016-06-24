@@ -1,5 +1,6 @@
 package ge.edu.freeuni.sdp.sprinklerscheduler.core;
 
+import javax.servlet.ServletContext;
 import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
