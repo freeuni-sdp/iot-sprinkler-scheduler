@@ -19,24 +19,29 @@ import java.util.*;
 public class Utility {
     private Map<Integer, Pair> houseIDAndLocations;
     private Map<Integer, Schedule> houseIDAndSchedules;
-    private Map<Integer, Pair> houseIDAndSun;
+    public Map<Integer, Pair> houseIDAndSun;
 
     public Utility(){
         this.houseIDAndLocations = new HashMap<>();
         this.houseIDAndSchedules = new HashMap<>();
         this.houseIDAndSun = new HashMap<>();
-        Thread refresher = new Thread(new Runnable() {
+        fetchNewDataFromLinks();
+        Runnable myThread = new Runnable() {
+            @Override
             public void run() {
-                refreshData();
-                try {
-                    Thread.sleep(1800000);
-                }
-                catch (InterruptedException e){
-                    System.out.println("pfffff");
+                while(true){
+                    try {
+                        Thread.sleep(1800000);
+                        refreshData();
+                    }
+                    catch (InterruptedException e){
+                        System.out.println("pfffff");
+                    }
                 }
             }
-        });
-        refresher.start();
+        };
+        Thread thread = new Thread(myThread);
+        thread.start();
     }
 
     public void refreshData(){
@@ -51,6 +56,7 @@ public class Utility {
     }
 
     public boolean timeForSprinkler(int houseID){
+        System.out.println("I am in");
         Schedule schedule = this.houseIDAndSchedules.get(houseID);
         Double afterSunRise = schedule.getAfterSunRise();
         Double beforeSunSet = schedule.getBeforeSunSet();
@@ -64,8 +70,10 @@ public class Utility {
 
         if (currentTimeD - afterSunRise*60*60*1000 > sunRise.getTime()
                 && currentTimeD + beforeSunSet*60*60*1000 < sunSet.getTime()){
+            System.out.println("truuuuuuuuuuueee");
             return true;
         }
+        System.out.println("falseeeeeeeee");
         return false;
     }
 
@@ -165,10 +173,10 @@ public class Utility {
         return houseIDAndLocations;
     }
 
-    private static class Pair<T> {
-        T first, second;
+    public static class Pair<T> {
+        public T first, second;
 
-        Pair(T a, T b) {
+        public Pair(T a, T b) {
             this.first = a;
             this.second = b;
         }
