@@ -21,7 +21,17 @@ public class Utility {
     private Map<Integer, Schedule> houseIDAndSchedules;
     private Map<Integer, Pair> houseIDAndSun;
 
-    public Utility(){
+    private static Utility instance = new Utility();
+
+    public static Utility getInstance(){
+        return instance;
+    }
+
+    private Utility(){
+
+    }
+
+    public void init() {
         this.houseIDAndLocations = new HashMap<>();
         this.houseIDAndSchedules = new HashMap<>();
         this.houseIDAndSun = new HashMap<>();
@@ -158,11 +168,18 @@ public class Utility {
                 Pair<Double> geoLoc = new Pair<>(latitude, longtitude);
                 System.out.println("house id is:   " + houseID + "  coords are:   " + latitude + "  aaand  " + longtitude);
                 houseIDAndLocations.put(houseID, geoLoc);
+                putDefaultScheduleToNewHouse(houseID);
             }
         } else {
             System.out.println("Could not load houses' IDs");
         }
         return houseIDAndLocations;
+    }
+
+    private void putDefaultScheduleToNewHouse(int houseID) {
+        if (this.houseIDAndSchedules.get(houseID)==null){
+            this.setNewScheduleForHouse(Schedule.getInstance(),houseID);
+        }
     }
 
     private static class Pair<T> {
@@ -173,6 +190,10 @@ public class Utility {
             this.second = b;
         }
 
+    }
+
+    public void setNewScheduleForHouse(Schedule schedule, Integer houseId){
+        this.houseIDAndSchedules.put(houseId, schedule);
     }
 
 
