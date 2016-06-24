@@ -1,19 +1,16 @@
 package ge.edu.freeuni.sdp.iot.service.scheduler.sprinkler;
 
-import com.eclipsesource.json.Json;
-import com.eclipsesource.json.JsonArray;
-import com.eclipsesource.json.JsonObject;
-import com.eclipsesource.json.JsonValue;
+import com.eclipsesource.json.*;
 import ge.edu.freeuni.sdp.iot.service.scheduler.sprinkler.shchedule.data.Schedule;
+import javafx.util.Pair;
 
 import javax.ws.rs.client.Client;
 import javax.ws.rs.client.ClientBuilder;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
-import java.util.Calendar;
-import java.util.HashMap;
-import java.util.Map;
-import java.util.Set;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.util.*;
 
 /**
  * Created by GM on 6/24/2016.
@@ -21,11 +18,12 @@ import java.util.Set;
 public class Utility {
     private Map<Integer, Pair> houseIDAndLocations;
     private Map<Integer, Schedule> houseIDAndSchedules;
+    private Map<Integer, Pair> houseIDAndSun;
 
     public Utility(){
-       this.houseIDAndLocations = new HashMap<>();
+        this.houseIDAndLocations = new HashMap<>();
         this.houseIDAndSchedules = new HashMap<>();
-
+        this.houseIDAndSun = new HashMap<>();
         Thread refresher = new Thread(new Runnable() {
             public void run() {
                 refreshData();
@@ -51,8 +49,46 @@ public class Utility {
         }
     }
 
+    public boolean timeForSprinkler(int houseID){
+        Schedule schedule = this.houseIDAndSchedules.get(houseID);
+        Double afterSunRise = schedule.getAfterSunRise();
+        Double beforeSunSet = schedule.getBeforeSunSet();
+
+        Date sunRise = (Date) this.houseIDAndSun.get(houseID).first;
+        Date sunSet = (Date) this.houseIDAndSun.get(houseID).second;
+
+        Date currentDate = new Date();
+        Long currentTime = currentDate.getTime();
+        Double currentTimeD = currentTime.doubleValue();
+
+        if (currentTimeD - afterSunRise*60*60*1000 > sunRise.getTime()
+                && currentTimeD + beforeSunSet*60*60*1000 < sunSet.getTime()){
+            return true;
+        }
+        return false;
+    }
+
+
     private void fetchNewDataFromLinks(){
         this.houseIDAndLocations = getHousesData();
+        this.houseIDAndSun.clear();
+        for (Integer houseID : getHouseIDS()){
+            Pair sun = getSunData(houseID);
+            String sunRise = ((String)sun.first).split(" ")[0];
+            String sunSet = ((String)sun.second).split(" ")[0];
+
+            SimpleDateFormat simpleDateFormat = new SimpleDateFormat("HH:mm:ss");
+            try
+            {
+                Date dateSunRise = simpleDateFormat.parse(sunRise);
+                Date dateSunSet = simpleDateFormat.parse(sunSet);
+                this.houseIDAndSun.put(houseID, new Pair(dateSunRise,dateSunSet));
+            }
+            catch (java.text.ParseException ex)
+            {
+                System.out.println("Exception "+ex);
+            }
+        }
     }
 
     public Set<Integer> getHouseIDS(){
