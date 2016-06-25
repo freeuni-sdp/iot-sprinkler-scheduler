@@ -23,17 +23,6 @@ public class SchedulerStatusTest extends JerseyTest {
     }
 
     @Test
-    public void TestGet() throws Exception {
-        Status result =
-                target("status")
-                        .request()
-                        .get(Status.class);
-
-        System.out.println(result);
-        assertEquals("true", result.getLastCommand());
-    }
-
-    @Test
     public void TestRootShouldReturn200() throws Exception {
 
         Response ping = target("/")
