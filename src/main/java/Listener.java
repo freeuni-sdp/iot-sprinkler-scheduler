@@ -1,5 +1,4 @@
 import ge.edu.freeuni.sdp.iot.service.scheduler.sprinkler.Utility;
-import ge.edu.freeuni.sdp.iot.service.scheduler.sprinkler.shchedule.data.Schedule;
 import ge.edu.freeuni.sdp.iot.service.scheduler.sprinkler.shchedule.updater.SprinklerStatusUpdater;
 import ge.edu.freeuni.sdp.iot.service.scheduler.sprinkler.sprinkler.comunicator.SprinklerCommunicatorProxy;
 

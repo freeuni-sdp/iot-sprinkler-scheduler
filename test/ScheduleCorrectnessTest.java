@@ -6,7 +6,6 @@ import org.glassfish.jersey.test.JerseyTest;
 import org.junit.Before;
 import org.junit.Test;
 
-import javax.ws.rs.client.Invocation;
 import javax.ws.rs.core.Application;
 import java.util.ArrayList;
 import java.util.List;
@@ -24,7 +23,7 @@ public class ScheduleCorrectnessTest extends JerseyTest {
 
         utility = Utility.getInstance();
         utility.init();
-        utility.setNewScheduleForHouse(Schedule.getInstance(),1);
+        utility.setNewScheduleForHouse(new Schedule(),"1");
     }
     @Override
     protected Application configure()
@@ -49,7 +48,7 @@ public class ScheduleCorrectnessTest extends JerseyTest {
         mySchedule.setBeforeSunSet(2.0);
         mySchedule.setEndMonth(7);
         mySchedule.setStartMonth(1);
-
+        utility.setNewScheduleForHouse(mySchedule,"1");
         Schedule result =
                 target("houses/1/schedule")
                         .request()
@@ -65,6 +64,7 @@ public class ScheduleCorrectnessTest extends JerseyTest {
     public void TestSchedule3() throws Exception {
         Schedule mySchedule = new Schedule();
         mySchedule.addExcluded("28/8/1995");
+        utility.setNewScheduleForHouse(mySchedule,"1");
         Schedule result =
                 target("houses/1/schedule")
                         .request()
@@ -80,6 +80,7 @@ public class ScheduleCorrectnessTest extends JerseyTest {
         for (int i=0; i<5; i++){
             mySchedule.addExcluded(i+"/"+i+"/"+2000);
         }
+        utility.setNewScheduleForHouse(mySchedule,"1");
         Schedule result =
                 target("houses/1/schedule")
                         .request()
@@ -97,6 +98,7 @@ public class ScheduleCorrectnessTest extends JerseyTest {
             list.add(i+"/"+i+"/"+2000);
         }
         mySchedule.setExcluded(list);
+        utility.setNewScheduleForHouse(mySchedule,"1");
         Schedule result =
                 target("houses/1/schedule")
                         .request()
@@ -105,5 +107,6 @@ public class ScheduleCorrectnessTest extends JerseyTest {
             assertEquals(i+"/"+i+"/"+2000, result.getExcluded().get(i));
         }
     }
+    
 
 }

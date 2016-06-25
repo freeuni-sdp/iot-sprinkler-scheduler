@@ -82,11 +82,16 @@ public class Utility {
 
         Schedule houseSchedule = this.houseIDAndSchedules.get(houseID);
         houseSchedule.addExcluded("28/08/1995");
-        String newstring = new SimpleDateFormat("dd/MM/yyy").format(currentDate);
-        System.out.println(newstring + "  da  " + houseSchedule.getExcluded().get(0));
+        String currDate = new SimpleDateFormat("dd/MM/yyy").format(currentDate);
+        System.out.println(currDate + "  da  " + houseSchedule.getExcluded().get(0));
 
         if ( rightNow - afterSunRise*3600 > afterSunRizeTime
                 && rightNow + beforeSunSet*3600 < beforeSunSetTime){
+            for (int i=0; i<houseSchedule.getExcluded().size(); i++){
+                if (currDate.equals(houseSchedule.getExcluded().get(i))){
+                    return false;
+                }
+            }
             return true;
         }
         return false;
