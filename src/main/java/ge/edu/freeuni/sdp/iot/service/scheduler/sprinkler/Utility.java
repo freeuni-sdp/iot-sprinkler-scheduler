@@ -18,9 +18,9 @@ import java.util.*;
  * Created by GM on 6/24/2016.
  */
 public class Utility {
-    private Map<Integer, Pair> houseIDAndLocations;
-    private Map<Integer, Schedule> houseIDAndSchedules;
-    public Map<Integer, Pair> houseIDAndSun;
+    private Map<String, Pair> houseIDAndLocations;
+    public Map<String, Schedule> houseIDAndSchedules;
+    public Map<String, Pair> houseIDAndSun;
 
     private static Utility instance = new Utility();
 
@@ -66,7 +66,7 @@ public class Utility {
         }
     }
 
-    public boolean timeForSprinkler(int houseID){
+    public boolean timeForSprinkler(String houseID){
         Schedule schedule = this.houseIDAndSchedules.get(houseID);
         Double afterSunRise = schedule.getAfterSunRise();
         Double beforeSunSet = schedule.getBeforeSunSet();
@@ -79,7 +79,12 @@ public class Utility {
         int rightNow = currentDate.getHours()*3600 + currentDate.getMinutes()*60 + currentDate.getSeconds();
         int afterSunRizeTime = sunRise.getHours()*3600 + sunRise.getMinutes()*60 + sunRise.getSeconds();
         int beforeSunSetTime = sunSet.getHours()*3600 + sunSet.getMinutes()*60 + sunSet.getSeconds();
-        
+
+        Schedule houseSchedule = this.houseIDAndSchedules.get(houseID);
+        houseSchedule.addExcluded("28/08/1995");
+        String newstring = new SimpleDateFormat("dd/MM/yyy").format(currentDate);
+        System.out.println(newstring + "  da  " + houseSchedule.getExcluded().get(0));
+
         if ( rightNow - afterSunRise*3600 > afterSunRizeTime
                 && rightNow + beforeSunSet*3600 < beforeSunSetTime){
             return true;
@@ -91,7 +96,7 @@ public class Utility {
     private void fetchNewDataFromLinks(){
         this.houseIDAndLocations = getHousesData();
         this.houseIDAndSun.clear();
-        for (Integer houseID : getHouseIDS()){
+        for (String houseID : getHouseIDS()){
             Pair sun = getSunData(houseID);
             String sunRise = ((String)sun.first);
             String sunSet = ((String)sun.second);
@@ -110,18 +115,18 @@ public class Utility {
         }
     }
 
-    public Set<Integer> getHouseIDS(){
+    public Set<String> getHouseIDS(){
         return this.houseIDAndLocations.keySet();
     }
 
-    public Schedule getHouseScheduleByID(int id){
+    public Schedule getHouseScheduleByID(String id){
         return this.houseIDAndSchedules.get(id);
     }
 
     /**
      * Fetches sunset times and sunrise times
      */
-    public Pair<String> getSunData(int house_id) {
+    public Pair<String> getSunData(String house_id) {
         Pair<Double> coordinates = this.houseIDAndLocations.get(house_id);
         double langtitude = coordinates.first;
         double longtitude = coordinates.second;
@@ -150,8 +155,8 @@ public class Utility {
     /**
      * Fetches houses IDs
      */
-    public Map<Integer, Pair> getHousesData() {
-        Map<Integer, Pair> houseIDAndLocations = new HashMap<>();
+    public Map<String, Pair> getHousesData() {
+        Map<String, Pair> houseIDAndLocations = new HashMap<>();
         Client client = ClientBuilder.newClient();
         Response response = client.target("http://private-0ab61f-iothouseregistry.apiary-mock.com/houses")
                 .request(MediaType.TEXT_PLAIN_TYPE)
@@ -161,11 +166,8 @@ public class Utility {
             JsonArray houses = Json.parse(jsonString).asArray();
             System.out.println(houses);
             for (JsonValue house : houses) {
-                JsonValue house_id = house.asObject().get("name");
-                String id_string = house_id.asObject().getString("_", "-1");
-
-                String[] houseNameParts = id_string.split("#");
-                int houseID = Integer.parseInt(houseNameParts[1]);
+                JsonValue house_id = house.asObject().get("RowKey");
+                String houseID = house_id.asObject().getString("_", "-1");
 
                 JsonValue house_location = house.asObject().get("geo_location");
                 String location_string = house_location.asObject().getString("_", "-1");
@@ -184,9 +186,9 @@ public class Utility {
         return houseIDAndLocations;
     }
 
-    private void putDefaultScheduleToNewHouse(int houseID) {
+    private void putDefaultScheduleToNewHouse(String houseID) {
         if (this.houseIDAndSchedules.get(houseID)==null){
-            this.setNewScheduleForHouse(Schedule.getInstance(),houseID);
+            this.setNewScheduleForHouse(new Schedule(),houseID);
         }
     }
 
@@ -201,7 +203,7 @@ public class Utility {
 
     }
 
-    public void setNewScheduleForHouse(Schedule schedule, Integer houseId){
+    public void setNewScheduleForHouse(Schedule schedule, String houseId){
         this.houseIDAndSchedules.put(houseId, schedule);
     }
 

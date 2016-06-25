@@ -24,15 +24,15 @@ public class Schedule {
     @XmlElement
     private Double afterSunRise;
 
-    public static Schedule getInstance() {
-        return instance;
+    public Schedule (){
+        this.excluded = new ArrayList<>();
+        this.startMonth = 4;
+        this.endMonth = 10;
+        this.afterSunRise = 0.5;
+        this.beforeSunSet = 0.5;
     }
 
-    private static Schedule instance = new Schedule(new ArrayList<String>(),4,10,0.5,0.5);
-
-    public Schedule (){}
-
-    private Schedule(List<String> excluded, Integer startMonth, Integer endMonth,
+    public Schedule(List<String> excluded, Integer startMonth, Integer endMonth,
                      Double afterSunRise, Double beforeSunSet) {
         this.excluded = excluded;
         this.startMonth = startMonth;

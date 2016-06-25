@@ -35,7 +35,7 @@ public class SchedulerStatus {
     @Path("/houses/{house_id}/schedule")
     @GET
     public Schedule schedule(@PathParam("house_id") String houseID) {
-        return Utility.getInstance().getHouseScheduleByID(Integer.valueOf(houseID));
+        return Utility.getInstance().getHouseScheduleByID(houseID);
     }
 
 
@@ -49,7 +49,7 @@ public class SchedulerStatus {
     public Response setSchedule(@PathParam("house_id") String houseId, Schedule schedule) {
         Utility utility = Utility.getInstance();
 
-        utility.setNewScheduleForHouse(schedule, Integer.valueOf(houseId));
+        utility.setNewScheduleForHouse(schedule, houseId);
 
 
         return Response.ok().build();
@@ -65,7 +65,7 @@ public class SchedulerStatus {
     @POST
     public Response addExcluded(@PathParam("house_id") String houseId, String day){
         Utility utility = Utility.getInstance();
-        utility.getHouseScheduleByID(Integer.valueOf(houseId)).addExcluded(day);
+        utility.getHouseScheduleByID(houseId).addExcluded(day);
         return Response.ok().build();
     }
 

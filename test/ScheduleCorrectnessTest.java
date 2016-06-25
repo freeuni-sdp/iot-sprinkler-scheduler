@@ -33,7 +33,7 @@ public class ScheduleCorrectnessTest extends JerseyTest {
 
     @Test
     public void TestSchedule2() throws Exception {
-        Schedule mySchedule = Schedule.getInstance();
+        Schedule mySchedule = new Schedule();
         mySchedule.setAfterSunRise(3.0);
         mySchedule.setBeforeSunSet(2.0);
         mySchedule.setEndMonth(7);
@@ -51,7 +51,7 @@ public class ScheduleCorrectnessTest extends JerseyTest {
 
     @Test
     public void TestSchedule3() throws Exception {
-        Schedule mySchedule = Schedule.getInstance();
+        Schedule mySchedule = new Schedule();
         mySchedule.addExcluded("28/8/1995");
         Schedule result =
                 target("schedule")
@@ -63,7 +63,7 @@ public class ScheduleCorrectnessTest extends JerseyTest {
 
     @Test
     public void TestSchedule4() throws Exception {
-        Schedule mySchedule = Schedule.getInstance();
+        Schedule mySchedule = new Schedule();
         mySchedule.setExcluded(new ArrayList<String>());
         for (int i=0; i<5; i++){
             mySchedule.addExcluded(i+"/"+i+"/"+2000);
@@ -79,7 +79,7 @@ public class ScheduleCorrectnessTest extends JerseyTest {
 
     @Test
     public void TestSchedule5() throws Exception {
-        Schedule mySchedule = Schedule.getInstance();
+        Schedule mySchedule = new Schedule();
         List<String> list = new ArrayList<>();
         for (int i=0; i<5; i++){
             list.add(i+"/"+i+"/"+2000);
