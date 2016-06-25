@@ -107,6 +107,6 @@ public class ScheduleCorrectnessTest extends JerseyTest {
             assertEquals(i+"/"+i+"/"+2000, result.getExcluded().get(i));
         }
     }
-    
+
 
 }
