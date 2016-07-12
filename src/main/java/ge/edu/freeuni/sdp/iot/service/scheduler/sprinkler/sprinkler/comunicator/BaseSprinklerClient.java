@@ -42,7 +42,7 @@ public class BaseSprinklerClient implements SprinklerClient {
 
 
     private Entity getEntity(boolean status, String houseId, int duration) {
-        String template = "{  'house_id': '%s',  'set_status': '%s',  'duration': %s}";
+        String template = Utility.SPRINKLER_BODY_TEMPLATE;
         String payloadJson = String.format(template , houseId, status ? "on" : "off", duration);
 
         return Entity.json(payloadJson);

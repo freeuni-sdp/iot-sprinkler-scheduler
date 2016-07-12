@@ -6,9 +6,8 @@ import ge.edu.freeuni.sdp.iot.service.scheduler.sprinkler.sprinkler.comunicator.
 import org.junit.Before;
 import org.junit.Test;
 import org.mockito.ArgumentCaptor;
-import org.mockito.invocation.InvocationOnMock;
-import org.mockito.stubbing.Answer;
 
+import javax.ws.rs.client.ClientBuilder;
 import javax.ws.rs.client.Entity;
 import javax.ws.rs.client.Invocation;
 
@@ -46,8 +45,45 @@ public class BaseSprinklerClientTest {
     }
 
     @Test
-    public void setStatus1() throws Exception {
+    public void setStatusCreatesCorrectBody() throws Exception {
+
+        RequestBuilderFactory builderFactory = mock(RequestBuilderFactory.class);
+        RequestWrapper requestWrapper = mock(RequestWrapper.class);
+
+        SprinklerClient client = new BaseSprinklerClient(Utility.SPRINKLER_PROD_API_ADDRESS,builderFactory,requestWrapper);
+
+        ArgumentCaptor<Entity> entity = ArgumentCaptor.forClass(Entity.class);
+        ArgumentCaptor<Invocation.Builder> request = ArgumentCaptor.forClass(Invocation.Builder.class);
+        client.setStatus(true,"1",90);
+
+        verify(requestWrapper).invokePost(request.capture(),entity.capture());
+
+
+        String template = Utility.SPRINKLER_BODY_TEMPLATE;
+        String payloadJson = String.format(template , 1, "on" , 90);
+
+        Entity<String> json = Entity.json(payloadJson);
+
+        assertEquals(json, entity.getValue());
+    }
+
+
+    @Test
+    public void setStatusCreatesCorrectRequest() throws Exception {
+        String s =  Utility.SPRINKLER_PROD_API_ADDRESS +"/houses/1";
+        RequestBuilderFactory builderFactory  = mock(RequestBuilderFactory.class);
+        RequestWrapper requestWrapper = new RequestWrapper();
+
+        SprinklerClient client = new BaseSprinklerClient(Utility.SPRINKLER_PROD_API_ADDRESS,builderFactory,requestWrapper);
+
+        when(builderFactory.getRequestBuilder(anyString())).thenReturn(ClientBuilder.newClient().target(s).request());
+        client.setStatus(true,"1",90);
+
+        verify(builderFactory).getRequestBuilder(anyString());
 
     }
+
+
+
 
 }

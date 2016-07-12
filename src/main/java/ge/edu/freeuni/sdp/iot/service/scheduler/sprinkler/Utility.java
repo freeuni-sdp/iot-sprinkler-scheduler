@@ -21,7 +21,9 @@ public class Utility {
 
     public static String SPRINKLER_MOCK_API_ADDRESS = "https://private-a39ec-iotsprinkler.apiary-mock.com/webapi";
     public static String SPRINKLER_PROD_API_ADDRESS = "https://iot-sprinkler.herokuapp.com/webapi";
+    public static String SPRINKLER_BODY_TEMPLATE = "{'house_id': '%s',  'set_status': '%s',  'duration': %s}";
     public static int  DEFAULT_DURATION = 60;
+
 
 
 
