@@ -13,7 +13,7 @@ import javax.ws.rs.core.Response;
 @Path("/")
 @Consumes( { MediaType.APPLICATION_JSON})
 @Produces( { MediaType.APPLICATION_JSON})
-public class SchedulerStatus {
+public class SchedulerService {
 
     @Path("/status")
     @GET

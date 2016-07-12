@@ -1,4 +1,4 @@
-import ge.edu.freeuni.sdp.iot.service.scheduler.sprinkler.SchedulerStatus;
+import ge.edu.freeuni.sdp.iot.service.scheduler.sprinkler.SchedulerService;
 import ge.edu.freeuni.sdp.iot.service.scheduler.sprinkler.Utility;
 import ge.edu.freeuni.sdp.iot.service.scheduler.sprinkler.shchedule.data.Schedule;
 import org.glassfish.jersey.server.ResourceConfig;
@@ -28,7 +28,7 @@ public class ScheduleCorrectnessTest extends JerseyTest {
     @Override
     protected Application configure()
     {
-        return new ResourceConfig(SchedulerStatus.class);
+        return new ResourceConfig(SchedulerService.class);
     }
 
     @Test
