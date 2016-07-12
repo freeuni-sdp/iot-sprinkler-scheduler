@@ -11,9 +11,6 @@ import javax.ws.rs.core.Response;
 import static org.junit.Assert.*;
 
 
-/**
- * Created by rezo on 6/9/16.
- */
 public class SchedulerStatusTest extends JerseyTest {
 
     @Override
