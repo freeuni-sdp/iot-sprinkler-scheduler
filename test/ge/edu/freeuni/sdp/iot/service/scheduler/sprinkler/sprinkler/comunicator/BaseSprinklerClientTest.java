@@ -72,7 +72,7 @@ public class BaseSprinklerClientTest {
     public void setStatusCreatesCorrectRequest() throws Exception {
         String s =  Utility.SPRINKLER_PROD_API_ADDRESS +"/houses/1";
         RequestBuilderFactory builderFactory  = mock(RequestBuilderFactory.class);
-        RequestWrapper requestWrapper = new RequestWrapper();
+        RequestWrapper requestWrapper = mock(RequestWrapper.class);
 
         SprinklerClient client = new BaseSprinklerClient(Utility.SPRINKLER_PROD_API_ADDRESS,builderFactory,requestWrapper);
 
