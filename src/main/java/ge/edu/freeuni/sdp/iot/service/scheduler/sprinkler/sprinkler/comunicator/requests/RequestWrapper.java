@@ -10,7 +10,7 @@ public class RequestWrapper {
         return builder.post(entity);
     }
 
-    public Response invokeGet(Invocation.Builder builder, Entity entity){
-        return builder.post(entity);
+    public Response invokeGet(Invocation.Builder builder){
+        return builder.get();
     }
 }
