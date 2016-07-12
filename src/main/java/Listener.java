@@ -1,7 +1,6 @@
 import ge.edu.freeuni.sdp.iot.service.scheduler.sprinkler.Utility;
 import ge.edu.freeuni.sdp.iot.service.scheduler.sprinkler.shchedule.updater.SprinklerStatusUpdater;
-import ge.edu.freeuni.sdp.iot.service.scheduler.sprinkler.sprinkler.comunicator.SimpleSprinklerClient;
-import ge.edu.freeuni.sdp.iot.service.scheduler.sprinkler.sprinkler.comunicator.SprinklerCommunicatorProxy;
+import ge.edu.freeuni.sdp.iot.service.scheduler.sprinkler.sprinkler.comunicator.SprinklerClientFactory;
 
 import javax.servlet.ServletContextEvent;
 import javax.servlet.ServletContextListener;
@@ -27,7 +26,7 @@ public class Listener implements ServletContextListener,
         System.out.println("listener started");
         Utility utility = Utility.getInstance();
         utility.init();
-        new SprinklerStatusUpdater(utility, new SimpleSprinklerClient()).start();
+        new SprinklerStatusUpdater(utility, new SprinklerClientFactory().baseClient()).start();
 
     }
 

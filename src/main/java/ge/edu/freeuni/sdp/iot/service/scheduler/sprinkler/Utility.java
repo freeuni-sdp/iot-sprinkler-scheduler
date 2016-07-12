@@ -18,6 +18,13 @@ import java.util.*;
  * Created by GM on 6/24/2016.
  */
 public class Utility {
+
+    public static String SPRINKLER_MOCK_API_ADDRESS = "https://private-a39ec-iotsprinkler.apiary-mock.com/webapi";
+    public static String SPRINKLER_PROD_API_ADDRESS = "https://iot-sprinkler.herokuapp.com/webapi";
+    public static int  DEFAULT_DURATION = 60;
+
+
+
     private Map<String, Pair> houseIDAndLocations;
     public Map<String, Schedule> houseIDAndSchedules;
     public Map<String, Pair> houseIDAndSun;
