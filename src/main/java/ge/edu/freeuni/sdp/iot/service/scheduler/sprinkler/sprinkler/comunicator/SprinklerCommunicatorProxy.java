@@ -7,7 +7,7 @@ public class SprinklerCommunicatorProxy implements SprinklerCommunicator {
 
     private DefaultSprinklerCommunicator communicator;
     public SprinklerCommunicatorProxy(){
-            this.communicator = new DefaultSprinklerCommunicator(SprinklerCommunicator.sprinklerMockApiAddress);
+            this.communicator = new DefaultSprinklerCommunicator(SprinklerCommunicator.SPRINKLER_MOCK_API_ADDRESS);
     }
 
     @Override

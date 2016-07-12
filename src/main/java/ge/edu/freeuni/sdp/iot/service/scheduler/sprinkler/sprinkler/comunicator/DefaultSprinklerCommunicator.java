@@ -10,6 +10,8 @@ import javax.ws.rs.core.Response;
 public class DefaultSprinklerCommunicator implements SprinklerCommunicator {
     private String sprinklerApiAddress;
 
+    private static final String templateUrl = "/houses/%s";
+
     public DefaultSprinklerCommunicator(String sprinklerApiAddress){
         this.sprinklerApiAddress = sprinklerApiAddress;
     }
@@ -26,7 +28,7 @@ public class DefaultSprinklerCommunicator implements SprinklerCommunicator {
         String template = "{  'house_id': '%s',  'set_status': '%s',  'duration': %s}";
         String payloadJson = String.format(template , houseId, status ? "on" : "off", duration);
         Entity payload = Entity.json(payloadJson);
-        String path = String.format(sprinklerApiAddress,houseId);
+        String path = String.format(sprinklerApiAddress+templateUrl,houseId);
         Response response = client.target(path)
                 .request(MediaType.APPLICATION_JSON_TYPE)
                 .put(payload);
