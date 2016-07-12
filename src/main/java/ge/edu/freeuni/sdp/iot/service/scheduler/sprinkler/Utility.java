@@ -18,7 +18,7 @@ import java.util.*;
  * Created by GM on 6/24/2016.
  */
 public class Utility {
-    private Map<String, Pair> houseIDAndLocations;
+    public Map<String, Pair> houseIDAndLocations;
     public Map<String, Schedule> houseIDAndSchedules;
     public Map<String, Pair> houseIDAndSun;
 
@@ -66,6 +66,10 @@ public class Utility {
         }
     }
 
+    public Date getCurrentDate(){
+        return new Date();
+    }
+
     public boolean timeForSprinkler(String houseID){
         Schedule schedule = this.houseIDAndSchedules.get(houseID);
         Double afterSunRise = schedule.getAfterSunRise();
@@ -74,7 +78,7 @@ public class Utility {
         Date sunRise = (Date) this.houseIDAndSun.get(houseID).first;
         Date sunSet = (Date) this.houseIDAndSun.get(houseID).second;
 
-        Date currentDate = new Date();
+        Date currentDate = getCurrentDate();
 
         int rightNow = currentDate.getHours()*3600 + currentDate.getMinutes()*60 + currentDate.getSeconds();
         int afterSunRizeTime = sunRise.getHours()*3600 + sunRise.getMinutes()*60 + sunRise.getSeconds();
@@ -163,7 +167,10 @@ public class Utility {
     public Map<String, Pair> getHousesData() {
         Map<String, Pair> houseIDAndLocations = new HashMap<>();
         Client client = ClientBuilder.newClient();
-        Response response = client.target("http://private-0ab61f-iothouseregistry.apiary-mock.com/houses")
+//        Response response = client.target("http://private-0ab61f-iothouseregistry.apiary-mock.com/houses")
+//                .request(MediaType.TEXT_PLAIN_TYPE)
+//                .get();
+        Response response = client.target("http://iot-house-registry.herokuapp.com/houses")
                 .request(MediaType.TEXT_PLAIN_TYPE)
                 .get();
         if (response.getStatus() == 200) {
@@ -192,7 +199,7 @@ public class Utility {
     }
 
     private void putDefaultScheduleToNewHouse(String houseID) {
-        if (this.houseIDAndSchedules.get(houseID)==null){
+        if (!this.houseIDAndSchedules.containsKey(houseID) || this.houseIDAndSchedules.get(houseID)==null){
             this.setNewScheduleForHouse(new Schedule(),houseID);
         }
     }
